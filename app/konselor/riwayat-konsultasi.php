@@ -1,7 +1,7 @@
 <?php
 require('../../database/db.php');
 session_start();
-if (!isset($_SESSION['admin'])) {
+if (!isset($_SESSION['konselor'])) {
   echo "<script>window.location = '../../login.php'</script>";
 }
 ?>
@@ -13,7 +13,7 @@ if (!isset($_SESSION['admin'])) {
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Admin</title>
+  <title>E-Konseling | Konselor</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../vendors/feather/feather.css">
   <link rel="stylesheet" href="../vendors/ti-icons/css/themify-icons.css">
@@ -42,12 +42,12 @@ if (!isset($_SESSION['admin'])) {
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <h3 style="color:white;">Admin</h3>
+        <h3 style="color: white;">Konselor</h3>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
 
         <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item nav-profile"><?php echo $_SESSION['admin']['username'] ?></li>
+          <li class="nav-item nav-profile"><?php echo $_SESSION['konselor']['nama'] ?></li>
           <li class="nav-item nav-profile"><a href="logout.php">Logout</a></li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas" id="sidebarToggle" href="#!">
@@ -60,19 +60,13 @@ if (!isset($_SESSION['admin'])) {
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a href="index.php" class="nav-link">Kanselor</a>
-          </li>
-          <li class="nav-item">
-            <a href="akan-datang.php" class="nav-link">Akan Datang</a>
+            <a href="index.php" class="nav-link">Pengajuan</a>
           </li>
           <li class="nav-item">
             <a href="sesi-berlangsung.php" class="nav-link">Sesi Berlangsung</a>
           </li>
           <li class="nav-item">
-            <a href="riwayat-konsultasi.php" class="nav-link">Riwayat Konsultasi</a>
-          </li>
-          <li class="nav-item">
-            <a href="statistik.php" class="nav-link" style="color:aqua; background-color:#4B49AC;">Statistik</a>
+            <a href="riwayat-konsultasi.php" class="nav-link" style="color:aqua; background-color:#4B49AC;">Riwayat Konsultasi</a>
           </li>
         </ul>
       </nav>
@@ -83,40 +77,32 @@ if (!isset($_SESSION['admin'])) {
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Statistik - Performa Konselor</h4>
+                  <h4 class="card-title">Riwayat Konsultasi</h4>
                   <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th rowspan="2">No</th>
-                          <th rowspan="2">Nama Konselor</th>
-                          <th colspan="4" class="text-center">Terlaksana</th>
-                          <th rowspan="2">Dibatalkan/Tidak ditanggapi</th>
-                        </tr>
-                        <tr>
-                          <th>Selesai</th>
-                          <th>berlanjut</th>
-                          <th>Alih Tangan</th>
-                          <th>Total Terlaksana</th>
+                          <th>No</th>
+                          <th>Nama</th>
+                          <th>Konsultasi</th>
+                          <th>Tanggal</th>
+                          <th>status</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         $no = 1;
-                        $konselor = mysqli_query($conn, "SELECT * FROM  konselor");
-                        $selesai = mysqli_query($conn, "SELECT * FROM konsultasi");
-
-                        if (mysqli_num_rows($konselor) > 0) {
-                          while ($row = mysqli_fetch_array($konselor)) {
+                        $sesisekarang = $_SESSION['konselor']['id_konselor'];
+                        $konsultasi = mysqli_query($conn, "SELECT * FROM konsultasi LEFT JOIN konselor USING(id_konselor) LEFT JOIN pengguna_konseling USING(id_konseling) WHERE id_konselor = '$sesisekarang' AND status = 'selesai'");
+                        if (mysqli_num_rows($konsultasi) > 0) {
+                          while ($row = mysqli_fetch_array($konsultasi)) {
                         ?>
                             <tr>
                               <td><?php echo $no++; ?></td>
-                              <td><img src="foto/<?php echo $row['foto_konselor']; ?>"> <?php echo $row['nama']; ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
+                              <td><?php echo $row['nama_pengguna']; ?></td>
+                              <td><?php echo $row['permasalahan']; ?></td>
+                              <td><?php echo $row['tanggal']; ?></td>
+                              <td><?php echo $row['status']; ?></td>
                             </tr>
                         <?php }
                         } ?>

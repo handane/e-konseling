@@ -43,8 +43,7 @@ if (!isset($_SESSION['admin'])) {
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
          <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo mr-5" href="index.php"></a>
-            <a class="navbar-brand brand-logo-mini" href="index.php"></a>
+            <h3 style="color:white;">Admin</h3>
          </div>
          <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
 
@@ -96,6 +95,8 @@ if (!isset($_SESSION['admin'])) {
                                        <th>Konselor</th>
                                        <th>Nama</th>
                                        <th>Spesialisasi</th>
+                                       <th>Username</th>
+                                       <th>Password</th>
                                        <th>Aksi</th>
                                     </tr>
                                  </thead>
@@ -111,6 +112,8 @@ if (!isset($_SESSION['admin'])) {
                                              <td><img src="foto/<?php echo $row['foto_konselor']; ?>" alt="" style="width:100px; height:100px;"></td>
                                              <td><?php echo $row['nama']; ?></td>
                                              <td><?php echo $row['spesialisasi']; ?></td>
+                                             <td><?php echo $row['username']; ?></td>
+                                             <td><?php echo $row['password']; ?></td>
                                              <td><a href="hapus-konselor.php?id_konselor=<?php echo $row['id_konselor']; ?>">Hapus</a></td>
 
                                           </tr>
@@ -201,8 +204,8 @@ if (!isset($_SESSION['admin'])) {
             <!-- partial:partials/_footer.html -->
             <footer class="footer">
                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                  <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-                  <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                  <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                  <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span> -->
                </div>
             </footer>
             <!-- partial -->

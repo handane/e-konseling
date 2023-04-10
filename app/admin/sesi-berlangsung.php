@@ -42,8 +42,7 @@ if (!isset($_SESSION['admin'])) {
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="index.php"></a>
-        <a class="navbar-brand brand-logo-mini" href="index.php"></a>
+        <h3 style="color:white;">Admin</h3>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
 
@@ -73,7 +72,7 @@ if (!isset($_SESSION['admin'])) {
             <a href="riwayat-konsultasi.php" class="nav-link">Riwayat Konsultasi</a>
           </li>
           <li class="nav-item">
-            <a href="statistik.php.php" class="nav-link">Statistik</a>
+            <a href="statistik.php" class="nav-link">Statistik</a>
           </li>
         </ul>
       </nav>
@@ -91,21 +90,21 @@ if (!isset($_SESSION['admin'])) {
                         <tr>
                           <th>No</th>
                           <th>Konselor</th>
-                          <th>Nama</th>
+                          <th>Nama Konsulan</th>
                           <th>Konsultasi</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         $no = 1;
-                        $konsultasi = mysqli_query($conn, "SELECT * FROM konsultasi LEFT JOIN konselor USING(id_konselor)");
+                        $konsultasi = mysqli_query($conn, "SELECT * FROM konsultasi LEFT JOIN konselor USING(id_konselor) LEFT JOIN pengguna_konseling USING(id_konseling) WHERE status = 'sudah verifikasi'");
                         if (mysqli_num_rows($konsultasi) > 0) {
                           while ($row = mysqli_fetch_array($konsultasi)) {
                         ?>
                             <tr>
                               <td><?php echo $no++; ?></td>
-                              <td><?php echo $row['foto_konselor']; ?></td>
-                              <td><?php echo $row['nama']; ?></td>
+                              <td><img src="foto/<?php echo $row['foto_konselor']; ?>" alt="" style="width:80px; height:80px;"> <?php echo $row['nama']; ?></td>
+                              <td><?php echo $row['nama_pengguna']; ?></td>
                               <td><?php echo $row['permasalahan']; ?></td>
 
                             </tr>
@@ -123,8 +122,8 @@ if (!isset($_SESSION['admin'])) {
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+            <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span> -->
           </div>
         </footer>
         <!-- partial -->

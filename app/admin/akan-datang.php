@@ -42,8 +42,7 @@ if (!isset($_SESSION['admin'])) {
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="index.php"></a>
-        <a class="navbar-brand brand-logo-mini" href="index.php"></a>
+        <h3 style="color:white;">Admin</h3>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
 
@@ -91,6 +90,7 @@ if (!isset($_SESSION['admin'])) {
                         <tr>
                           <th>No</th>
                           <th>Konselor</th>
+                          <th>Nama</th>
                           <th>Konsultasi</th>
                           <th>Jenis</th>
                           <th>Jam</th>
@@ -101,12 +101,13 @@ if (!isset($_SESSION['admin'])) {
                         <?php
                         $no = 1;
                         $id_konseling = $_SESSION['admin']['id'];
-                        $konsultasi = mysqli_query($conn, "SELECT * FROM konsultasi LEFT JOIN konselor USING (id_konselor)");
+                        $konsultasi = mysqli_query($conn, "SELECT * FROM konsultasi LEFT JOIN konselor USING (id_konselor) WHERE status = 'menunggu verifikasi'");
                         if (mysqli_num_rows($konsultasi) > 0) {
                           while ($row = mysqli_fetch_array($konsultasi)) {
                         ?>
                             <tr>
                               <td><?php echo $no++; ?></td>
+                              <td><img src="foto/<?php echo $row['foto_konselor']; ?>" alt=""></td>
                               <td><?php echo $row['nama']; ?></td>
                               <td><?php echo $row['permasalahan']; ?></td>
                               <td><?php echo $row['jenis_konsultasi']; ?></td>
@@ -127,8 +128,8 @@ if (!isset($_SESSION['admin'])) {
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+            <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span> -->
           </div>
         </footer>
         <!-- partial -->

@@ -66,7 +66,7 @@ session_start();
                       $no_telp = $_POST['telp_baru'];
                       $username_baru = $_POST['username_baru'];
                       $password_baru = $_POST['password_baru'];
-                      $cek_regist = mysqli_query($conn, "SELECT * FROM pengguna_konseling");
+                      $cek_regist = mysqli_query($conn, "SELECT * FROM pengguna_konseling WHERE username = '$username_baru'");
                       if(mysqli_num_rows($cek_regist) < 1){
                         $get_regist = mysqli_query($conn, "INSERT INTO pengguna_konseling VALUE(
                                 null,

@@ -13,7 +13,7 @@ if (!isset($_SESSION['admin'])) {
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Admin</title>
+  <title>E-Konseling | Konselor</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../vendors/feather/feather.css">
   <link rel="stylesheet" href="../vendors/ti-icons/css/themify-icons.css">
@@ -42,7 +42,7 @@ if (!isset($_SESSION['admin'])) {
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <h3 style="color:white;">Admin</h3>
+        <h3 style="color: white;">Konselor</h3>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
 
@@ -83,40 +83,30 @@ if (!isset($_SESSION['admin'])) {
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Statistik - Performa Konselor</h4>
+                  <h4 class="card-title">Statistik</h4>
                   <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th rowspan="2">No</th>
-                          <th rowspan="2">Nama Konselor</th>
-                          <th colspan="4" class="text-center">Terlaksana</th>
-                          <th rowspan="2">Dibatalkan/Tidak ditanggapi</th>
-                        </tr>
-                        <tr>
-                          <th>Selesai</th>
-                          <th>berlanjut</th>
-                          <th>Alih Tangan</th>
-                          <th>Total Terlaksana</th>
+                          <th>No</th>
+                          <th>Konselor</th>
+                          <th>Nama</th>
+                          <th>Konsultasi</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         $no = 1;
-                        $konselor = mysqli_query($conn, "SELECT * FROM  konselor");
-                        $selesai = mysqli_query($conn, "SELECT * FROM konsultasi");
-
-                        if (mysqli_num_rows($konselor) > 0) {
-                          while ($row = mysqli_fetch_array($konselor)) {
+                        $konsultasi = mysqli_query($conn, "SELECT * FROM konsultasi LEFT JOIN konselor USING(id_konselor)");
+                        if (mysqli_num_rows($konsultasi) > 0) {
+                          while ($row = mysqli_fetch_array($konsultasi)) {
                         ?>
                             <tr>
                               <td><?php echo $no++; ?></td>
-                              <td><img src="foto/<?php echo $row['foto_konselor']; ?>"> <?php echo $row['nama']; ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
+                              <td><?php echo $row['foto_konselor']; ?></td>
+                              <td><?php echo $row['nama']; ?></td>
+                              <td><?php echo $row['permasalahan']; ?></td>
+
                             </tr>
                         <?php }
                         } ?>
@@ -132,8 +122,8 @@ if (!isset($_SESSION['admin'])) {
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span> -->
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
         </footer>
         <!-- partial -->
