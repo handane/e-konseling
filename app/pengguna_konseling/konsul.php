@@ -40,13 +40,15 @@ if (!isset($_SESSION['konseling'])) {
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <h3 style="color: white;">Konseling</h3>
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color: rgba(255,245,0,1); border-bottom: solid grey">
+
+        <h3 style="color:rgba(2,11,133,1);">Konseling</h3>
       </div>
-      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color: rgba(2,11,133,1);">
 
         <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item nav-profile"><?php echo $_SESSION['konseling']['nama_pengguna'] ?></li>
+          <li class="nav-item nav-profile" style="color: white;"><?php echo $_SESSION['konseling']['nama_pengguna'] ?></li>
+          <li class="nav-item nav-profile"><a href="logout.php" style="color: rgba(241,255,25,1)">Logout</a></li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas" id="sidebarToggle" href="#!">
           <span class="icon-menu"></span>
@@ -58,7 +60,7 @@ if (!isset($_SESSION['konseling'])) {
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a href="index.php" class="nav-link" style="color:aqua; background-color:#4B49AC;">Pengajuan</a>
+            <a href="index.php" class="nav-link" style="color:yellow; background-color:#4B49AC;">Pengajuan</a>
           </li>
           <li class="nav-item">
             <a href="akan-datang.php" class="nav-link">Akan Datang</a>
@@ -87,6 +89,7 @@ if (!isset($_SESSION['konseling'])) {
                       while ($row = mysqli_fetch_array($konsultasi)) {
                     ?>
                         <div class="form-group">
+                          <input type="hidden" name="username_konselor" value="<?php echo $row['username_konselor']; ?>">
                           <label for="exampleInputName1">Nama Konselor</label>
                           <input type="text" class="form-control" id="exampleInputName1" name="nama_konselor" value="<?php echo $row['nama'] ?>" readonly>
                         </div>
@@ -126,8 +129,9 @@ if (!isset($_SESSION['konseling'])) {
                     $jam = $_POST['jam'];
                     $permasalahan = $_POST['permasalahan'];
                     $status = "menunggu verifikasi";
+                    $username_konselor = $_POST['username_konselor'];
 
-                    $cek_reservasi = mysqli_query($conn, "SELECT * FROM konsultasi WHERE tanggal = '$tanggal'");
+                    $cek_reservasi = mysqli_query($conn, "SELECT * FROM konsultasi WHERE tanggal = '$tanggal' AND status = 'menunggu verifikasi'");
                     if (mysqli_num_rows($cek_reservasi) == 1) {
                       echo "
             <script>
@@ -145,6 +149,15 @@ if (!isset($_SESSION['konseling'])) {
                '" . $permasalahan . "',
                '" . $status . "'
             )");
+
+                      $cek_statistik = mysqli_query($conn, "SELECT * FROM statistik WHERE username_konselor = '$username_konselor'");
+                      $cek_statistik_2 = mysqli_fetch_array($cek_statistik);
+                      $akan_datang = $cek_statistik_2['akan_datang'] + 1;
+
+                      $set_akan_datang = mysqli_query($conn, "UPDATE statistik SET 
+                      akan_datang = '$akan_datang' 
+                      WHERE username_konselor = '$username_konselor'");
+
                       if ($set_user) {
                         echo "<script>
                alert('pendaftaran konsultasi berhasil');

@@ -42,14 +42,15 @@ if (!isset($_SESSION['admin'])) {
    <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <h3 style="color:white;">Admin</h3>
+         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color: rgba(255,245,0,1); border-bottom: solid grey">
+
+            <h3 style="color:rgba(2,11,133,1);">Admin</h3>
          </div>
-         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color: rgba(2,11,133,1);">
 
             <ul class="navbar-nav navbar-nav-right">
-               <li class="nav-item nav-profile"><?php echo $_SESSION['admin']['username'] ?></li>
-               <li class="nav-item nav-profile"><a href="logout.php">Logout</a></li>
+               <li class="nav-item nav-profile" style="color: white;"><?php echo $_SESSION['admin']['username'] ?></li>
+               <li class="nav-item nav-profile"><a href="logout.php" style="color: rgba(241,255,25,1)">Logout</a></li>
             </ul>
             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas" id="sidebarToggle" href="#!">
                <span class="icon-menu"></span>
@@ -61,7 +62,7 @@ if (!isset($_SESSION['admin'])) {
          <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                <li class="nav-item">
-                  <a href="index.php" class="nav-link" style="color:aqua; background-color:#4B49AC;">Kanselor</a>
+                  <a href="index.php" class="nav-link" style="color:yellow; background-color:#4B49AC;">Kanselor</a>
                </li>
                <li class="nav-item">
                   <a href="akan-datang.php" class="nav-link">Akan Datang</a>
@@ -112,9 +113,9 @@ if (!isset($_SESSION['admin'])) {
                                              <td><img src="foto/<?php echo $row['foto_konselor']; ?>" alt="" style="width:100px; height:100px;"></td>
                                              <td><?php echo $row['nama']; ?></td>
                                              <td><?php echo $row['spesialisasi']; ?></td>
-                                             <td><?php echo $row['username']; ?></td>
+                                             <td><?php echo $row['username_konselor']; ?></td>
                                              <td><?php echo $row['password']; ?></td>
-                                             <td><a href="hapus-konselor.php?id_konselor=<?php echo $row['id_konselor']; ?>">Hapus</a></td>
+                                             <td><a href="hapus-konselor.php?id_konselor=<?php echo $row['id_konselor']; ?>&username_konselor=<?php echo $row['username_konselor']; ?>">Hapus</a></td>
 
                                           </tr>
                                     <?php }
@@ -168,7 +169,7 @@ if (!isset($_SESSION['admin'])) {
 
                         if (in_array($type2, $tipe_diizinkan) === true) {
                            if ($ukuran1 < $maxsize) {
-                              $cek_regist = mysqli_query($conn, "SELECT * FROM konselor WHERE username = '$username_baru'");
+                              $cek_regist = mysqli_query($conn, "SELECT * FROM konselor WHERE username_konselor = '$username_baru'");
                               if (mysqli_num_rows($cek_regist) < 1) {
                                  $dest = "./foto/" . $_FILES['foto_1']['name'];
                                  move_uploaded_file($tmp_name1, './foto/' . $newname1);
@@ -180,6 +181,19 @@ if (!isset($_SESSION['admin'])) {
                                     '" . $spesialisasi_baru . "',
                                     '" . $newname1 . "'
                                  )");
+                                 $get_statistik = mysqli_query($conn, "INSERT INTO statistik VALUE(
+                                    null,
+                                    '" . $username_baru . "',
+                                    '0',
+                                    '0',
+                                    '0'
+                                 )");
+                                 if ($get_statistik) {
+                                    echo '<script>alert("akun berhasil dibuat")</script>';
+                                    echo "<script>window.location='index.php';</script>";
+                                 }else{
+                                    echo '<script>alert("statistik gagal input")</script>';
+                                 }
                                  if ($get_regist) {
                                     echo '<script>alert("akun berhasil dibuat")</script>';
                                     echo "<script>window.location='index.php';</script>";

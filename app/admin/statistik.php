@@ -41,14 +41,15 @@ if (!isset($_SESSION['admin'])) {
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <h3 style="color:white;">Admin</h3>
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color: rgba(255,245,0,1); border-bottom: solid grey">
+
+        <h3 style="color:rgba(2,11,133,1);">Admin</h3>
       </div>
-      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color: rgba(2,11,133,1);">
 
         <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item nav-profile"><?php echo $_SESSION['admin']['username'] ?></li>
-          <li class="nav-item nav-profile"><a href="logout.php">Logout</a></li>
+          <li class="nav-item nav-profile" style="color: white;"><?php echo $_SESSION['admin']['username'] ?></li>
+          <li class="nav-item nav-profile"><a href="logout.php" style="color: rgba(241,255,25,1)">Logout</a></li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas" id="sidebarToggle" href="#!">
           <span class="icon-menu"></span>
@@ -72,7 +73,7 @@ if (!isset($_SESSION['admin'])) {
             <a href="riwayat-konsultasi.php" class="nav-link">Riwayat Konsultasi</a>
           </li>
           <li class="nav-item">
-            <a href="statistik.php" class="nav-link" style="color:aqua; background-color:#4B49AC;">Statistik</a>
+            <a href="statistik.php" class="nav-link" style="color:yellow; background-color:#4B49AC;">Statistik</a>
           </li>
         </ul>
       </nav>
@@ -90,33 +91,25 @@ if (!isset($_SESSION['admin'])) {
                         <tr>
                           <th rowspan="2">No</th>
                           <th rowspan="2">Nama Konselor</th>
-                          <th colspan="4" class="text-center">Terlaksana</th>
-                          <th rowspan="2">Dibatalkan/Tidak ditanggapi</th>
-                        </tr>
-                        <tr>
+                          <th>Akan Datang</th>
+                          <th>Berlangsung</th>
                           <th>Selesai</th>
-                          <th>berlanjut</th>
-                          <th>Alih Tangan</th>
-                          <th>Total Terlaksana</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         $no = 1;
-                        $konselor = mysqli_query($conn, "SELECT * FROM  konselor");
-                        $selesai = mysqli_query($conn, "SELECT * FROM konsultasi");
-
-                        if (mysqli_num_rows($konselor) > 0) {
-                          while ($row = mysqli_fetch_array($konselor)) {
-                        ?>
+                        $statistik = mysqli_query($conn, "SELECT * FROM statistik LEFT JOIN konselor USING(username_konselor)");
+                        
+                        if (mysqli_num_rows($statistik) > 0) {
+                          while ($row = mysqli_fetch_array($statistik)) {
+                            ?>
                             <tr>
                               <td><?php echo $no++; ?></td>
                               <td><img src="foto/<?php echo $row['foto_konselor']; ?>"> <?php echo $row['nama']; ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
-                              <td><?php echo "" ?></td>
+                              <td><?php echo $row['akan_datang']; ?></td>
+                              <td><?php echo $row['berlangsung']; ?></td>
+                              <td><?php echo $row['selesai']; ?></td>
                             </tr>
                         <?php }
                         } ?>

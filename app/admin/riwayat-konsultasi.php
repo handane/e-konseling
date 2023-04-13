@@ -41,14 +41,15 @@ if (!isset($_SESSION['admin'])) {
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <h3 style="color:white;">Admin</h3>
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color: rgba(255,245,0,1); border-bottom: solid grey">
+
+        <h3 style="color:rgba(2,11,133,1);">Admin</h3>
       </div>
-      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color: rgba(2,11,133,1);">
 
         <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item nav-profile"><?php echo $_SESSION['admin']['username'] ?></li>
-          <li class="nav-item nav-profile"><a href="logout.php">Logout</a></li>
+          <li class="nav-item nav-profile" style="color: white;"><?php echo $_SESSION['admin']['username'] ?></li>
+          <li class="nav-item nav-profile"><a href="logout.php" style="color: rgba(241,255,25,1)">Logout</a></li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas" id="sidebarToggle" href="#!">
           <span class="icon-menu"></span>
@@ -69,7 +70,7 @@ if (!isset($_SESSION['admin'])) {
             <a href="sesi-berlangsung.php" class="nav-link">Sesi Berlangsung</a>
           </li>
           <li class="nav-item">
-            <a href="riwayat-konsultasi.php" class="nav-link" style="color:aqua; background-color:#4B49AC;">Riwayat Konsultasi</a>
+            <a href="riwayat-konsultasi.php" class="nav-link" style="color:yellow; background-color:#4B49AC;">Riwayat Konsultasi</a>
           </li>
           <li class="nav-item">
             <a href="statistik.php" class="nav-link">Statistik</a>

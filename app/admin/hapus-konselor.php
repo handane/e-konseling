@@ -13,5 +13,7 @@ if (isset($_GET['id_konselor'])) {
     unlink("./foto/$foto");
   }
   $delete1 = mysqli_query($conn, "DELETE FROM konselor WHERE id_konselor = '" . $_GET['id_konselor'] . "'");
+  $delete2 = mysqli_query($conn, "DELETE FROM konsultasi WHERE id_konselor = '" . $_GET['id_konselor'] . "'");
+  $delete3 = mysqli_query($conn, "DELETE FROM statistik WHERE username_konselor = '" . $_GET['username_konselor'] . "'");
   echo '<script>window.location="index.php"</script>';
 }

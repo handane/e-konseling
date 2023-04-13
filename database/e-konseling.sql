@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2023 at 08:18 AM
+-- Generation Time: Apr 13, 2023 at 07:42 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.5
 
@@ -48,21 +48,12 @@ INSERT INTO `admin` (`id`, `username`, `password`) VALUES
 
 CREATE TABLE `konselor` (
   `id_konselor` int(2) NOT NULL,
-  `username` varchar(25) NOT NULL,
+  `username_konselor` varchar(25) NOT NULL,
   `password` varchar(25) NOT NULL,
   `nama` varchar(55) NOT NULL,
   `spesialisasi` varchar(255) NOT NULL,
   `foto_konselor` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `konselor`
---
-
-INSERT INTO `konselor` (`id_konselor`, `username`, `password`, `nama`, `spesialisasi`, `foto_konselor`) VALUES
-(11, 'konselor_aldous', 'konselor_aldous', 'aldous gember S.H., M.Pr., Dp.R', 'demo', 'foto11681054883.png'),
-(12, 'konselor_stepanus', 'konselor_stepanus', 'stepanus, Kor.P., M.Pu', 'ngintip', 'foto11681054996.jpg'),
-(13, 'konselor_sungkoco', 'konselor_sungkoco', 'sungkoco, Ph.D', 'smackdown', 'foto11681055154.jpg');
 
 -- --------------------------------------------------------
 
@@ -78,16 +69,9 @@ CREATE TABLE `konsultasi` (
   `tanggal` varchar(25) NOT NULL,
   `jam` varchar(11) NOT NULL,
   `no_wa` varchar(15) NOT NULL,
-  `permasalahan` varchar(255) NOT NULL
+  `permasalahan` varchar(255) NOT NULL,
+  `status` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `konsultasi`
---
-
-INSERT INTO `konsultasi` (`id`, `id_konselor`, `id_konseling`, `jenis_konsultasi`, `tanggal`, `jam`, `no_wa`, `permasalahan`) VALUES
-(1, 1, 2, 'individu (1 orang)', '2023-04-14', '18:42', '08312322', 'stress'),
-(2, 1, 2, 'kelompok', '2023-04-09', '19:55', '34342134214', 'pusing');
 
 -- --------------------------------------------------------
 
@@ -99,7 +83,7 @@ CREATE TABLE `pengguna_konseling` (
   `id_konseling` int(11) NOT NULL,
   `username` varchar(25) NOT NULL,
   `password` varchar(25) NOT NULL,
-  `nama` varchar(25) NOT NULL,
+  `nama_pengguna` varchar(25) NOT NULL,
   `no_telp` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -107,8 +91,23 @@ CREATE TABLE `pengguna_konseling` (
 -- Dumping data for table `pengguna_konseling`
 --
 
-INSERT INTO `pengguna_konseling` (`id_konseling`, `username`, `password`, `nama`, `no_telp`) VALUES
-(2, 'aldous1', 'aldous1', 'aldous', '08231231');
+INSERT INTO `pengguna_konseling` (`id_konseling`, `username`, `password`, `nama_pengguna`, `no_telp`) VALUES
+(2, 'aldous1', 'aldous1', 'aldous', '08231231'),
+(3, 'halucard1', 'halucard1', 'halucard', '082318131');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `statistik`
+--
+
+CREATE TABLE `statistik` (
+  `id` int(11) NOT NULL,
+  `username_konselor` varchar(55) NOT NULL,
+  `berlangsung` int(11) NOT NULL,
+  `akan_datang` int(11) NOT NULL,
+  `selesai` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -139,6 +138,12 @@ ALTER TABLE `pengguna_konseling`
   ADD PRIMARY KEY (`id_konseling`);
 
 --
+-- Indexes for table `statistik`
+--
+ALTER TABLE `statistik`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -152,19 +157,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `konselor`
 --
 ALTER TABLE `konselor`
-  MODIFY `id_konselor` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_konselor` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `konsultasi`
 --
 ALTER TABLE `konsultasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `pengguna_konseling`
 --
 ALTER TABLE `pengguna_konseling`
-  MODIFY `id_konseling` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_konseling` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `statistik`
+--
+ALTER TABLE `statistik`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

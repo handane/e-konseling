@@ -41,14 +41,15 @@ if (!isset($_SESSION['konselor'])) {
    <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <h3 style="color:white;">Konselor</h3>
+         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color: rgba(255,245,0,1); border-bottom: solid grey">
+
+            <h3 style="color:rgba(2,11,133,1);">Konselor</h3>
          </div>
-         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color: rgba(2,11,133,1);">
 
             <ul class="navbar-nav navbar-nav-right">
-               <li class="nav-item nav-profile"><?php echo $_SESSION['konselor']['nama'] ?></li>
-               <li class="nav-item nav-profile"><a href="logout.php">Logout</a></li>
+               <li class="nav-item nav-profile" style="color: white;"><?php echo $_SESSION['konselor']['nama'] ?></li>
+               <li class="nav-item nav-profile"><a href="logout.php" style="color: rgba(241,255,25,1)">Logout</a></li>
             </ul>
             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas" id="sidebarToggle" href="#!">
                <span class="icon-menu"></span>
@@ -60,7 +61,7 @@ if (!isset($_SESSION['konselor'])) {
          <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                <li class="nav-item">
-                  <a href="index.php" class="nav-link" style="color:aqua; background-color:#4B49AC;">Pengajuan</a>
+                  <a href="index.php" class="nav-link" style="color:yellow; background-color:#4B49AC;">Pengajuan</a>
                </li>
                <li class="nav-item">
                   <a href="sesi-berlangsung.php" class="nav-link">Sesi Berlangsung</a>
@@ -95,20 +96,20 @@ if (!isset($_SESSION['konselor'])) {
                                     <?php
                                     $no = 1;
                                     $id_konselor1 = $_SESSION['konselor']['id_konselor'];
-                                    $konselor = mysqli_query($conn, "SELECT * FROM konsultasi LEFT JOIN pengguna_konseling USING (id_konseling) WHERE id_konselor = '$id_konselor1' AND status = 'sudah verifikasi' OR status ='menunggu verifikasi'");
+                                    $konselor = mysqli_query($conn, "SELECT * FROM konsultasi LEFT JOIN pengguna_konseling USING (id_konseling) LEFT JOIN konselor USING (id_konselor) WHERE id_konselor = '$id_konselor1' AND status = 'sudah verifikasi' OR status ='menunggu verifikasi'");
                                     if (mysqli_num_rows($konselor) > 0) {
                                        while ($row = mysqli_fetch_array($konselor)) {
                                     ?>
                                           <tr>
                                              <td><?php echo $no++; ?></td>
                                              <td>
-                                                <?php 
-                                                   if($row['status'] == 'sudah verifikasi'){
-                                                      echo $row['status'];
-                                                   }else{
+                                                <?php
+                                                if ($row['status'] == 'sudah verifikasi') {
+                                                   echo $row['status'];
+                                                } else {
                                                 ?>
-                                                   <a class="btn btn-sm btn-success" href="update.php?id=<?php echo $row['id']; ?>">Verifikasi Sekarang</a>
-                                                   <?php } ?>
+                                                   <a class="btn btn-sm btn-success" href="update.php?id=<?php echo $row['id']; ?>&username_konselor=<?php echo $row['username_konselor']; ?>">Verifikasi Sekarang</a>
+                                                <?php } ?>
                                              </td>
                                              <td><?php echo $row['nama_pengguna']; ?></td>
                                              <td><?php echo $row['permasalahan']; ?></td>
